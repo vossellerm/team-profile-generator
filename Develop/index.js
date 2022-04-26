@@ -1,136 +1,188 @@
-const Employee = require("./lib/Employee");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 const fs = require("fs");
-const generateTeam = require("./src/generateTeam");
+const getSite = require("./src/generateTeam");
 const inquirer = require("inquirer");
 
-const engineer = () => {
+const employeeArray = [];
+
+const init = () => {
   inquirer
     .prompt([
       {
-        type: "input",
-        name: "name",
-        message: "What is the engineer's name?",
-      },
-      {
-        type: "input",
-        name: "id",
-        message: "What is the engineer's employee ID?",
-      },
-      {
-        type: "input",
-        name: "email",
-        message: "What is the engineer's email address?",
-      },
-      {
-        type: "input",
-        name: "github",
-        message: "What is the engineer's GitHub username?",
-      },
-      {
+        name: "position",
         type: "list",
-        name: "nextStep",
-        message: "What would you like to do next?",
-        choices: ["Add an engineer", "Add an intern", "Finish Building"],
+        message: "What position would you like to add?",
+        choices: ["Manager", "Engineer", "Intern"],
       },
     ])
-    .then((answers) => {
-      if (answers.nextStep === "Finish Building") {
-        // Write HTML file with answers
-        return console.log(answers);
-      } else if (answers.nextStep === "Add an engineer") {
-        console.log(answers);
-        engineer();
-      } else if (answers.nextStep === "Add an intern") {
-        console.log(answers);
-        intern();
-      }
-    });
-};
-const intern = () => {
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        name: "name",
-        message: "What is the interns's name?",
-      },
-      {
-        type: "input",
-        name: "id",
-        message: "What is the interns's employee ID?",
-      },
-      {
-        type: "input",
-        name: "email",
-        message: "What is the interns's email address?",
-      },
-      {
-        type: "input",
-        name: "school",
-        message: "Where does the intern go to school?",
-      },
-      {
-        type: "list",
-        name: "nextStep",
-        message: "What would you like to do next?",
-        choices: ["Add an engineer", "Add an intern", "Finish Building"],
-      },
-    ])
-    .then((answers) => {
-      if (answers.nextStep === "Finish Building") {
-        // Write HTML file with answers
-        return console.log(answers);
-      } else if (answers.nextStep === "Add an engineer") {
-        console.log(answers);
-        engineer();
-      } else if (answers.nextStep === "Add an intern") {
-        console.log(answers);
-        intern();
+    .then((result) => {
+      if (result.position === "Manager") {
+        inquirer
+          .prompt([
+            {
+              name: "name",
+              type: "input",
+              message: "What is the manager's name?",
+            },
+            {
+              name: "id",
+              type: "input",
+              message: "What is the manager's ID?",
+            },
+            {
+              name: "email",
+              type: "input",
+              message: "What is the manager's email?",
+            },
+            {
+              name: "officeNumber",
+              type: "input",
+              message: "What is the manager's office number?",
+            },
+          ])
+          .then((managerResult) => {
+            const newManager = new Manager(
+              managerResult.name,
+              managerResult.id,
+              managerResult.email,
+              managerResult.officeNumber
+            );
+            employeeArray.push(newManager);
+            inquirer
+              .prompt([
+                {
+                  name: "doneCheck",
+                  type: "list",
+                  message: "Are you done adding team members?",
+                  choices: ["Yes", "No"],
+                },
+              ])
+              .then((ifDone) => {
+                if (ifDone.doneCheck === "Yes") {
+                  const employeeCards = getSite(employeeArray);
+                  fs.writeFile(`./dist/Site.html`, employeeCards, (err) =>
+                    err
+                      ? console.log("Site Generation failed.")
+                      : console.log("Site Created!")
+                  );
+                } else {
+                  init();
+                }
+              });
+          });
+      } else if (result.position === "Engineer") {
+        inquirer
+          .prompt([
+            {
+              name: "engineerName",
+              type: "input",
+              message: "What is the engineer's name?",
+            },
+            {
+              name: "engineerID",
+              type: "input",
+              message: "What is the engineer's ID?",
+            },
+            {
+              name: "engineerEmail",
+              type: "input",
+              message: "What is the engineer's email?",
+            },
+            {
+              name: "github",
+              type: "input",
+              message: "What is the engineer's github?",
+            },
+          ])
+          .then((engineerResult) => {
+            const newEngineer = new Engineer(
+              engineerResult.engineerName,
+              engineerResult.engineerID,
+              engineerResult.engineerEmail,
+              engineerResult.github
+            );
+            employeeArray.push(newEngineer);
+            inquirer
+              .prompt([
+                {
+                  name: "doneCheck",
+                  type: "list",
+                  message: "Are you done adding team members?",
+                  choices: ["Yes", "No"],
+                },
+              ])
+              .then((ifDone) => {
+                if (ifDone.doneCheck === "Yes") {
+                  const employeeCards = getSite(employeeArray);
+                  fs.writeFile(`./dist/Site.html`, employeeCards, (err) =>
+                    err
+                      ? console.log("Site Generation failed.")
+                      : console.log("Site Created!")
+                  );
+                } else {
+                  init();
+                }
+              });
+          });
+      } else {
+        inquirer
+          .prompt([
+            {
+              name: "name",
+              type: "input",
+              message: "What is the intern's name?",
+            },
+            {
+              name: "id",
+              type: "input",
+              message: "What is the intern's ID?",
+            },
+            {
+              name: "email",
+              type: "input",
+              message: "What is the intern's email?",
+            },
+            {
+              name: "school",
+              type: "input",
+              message: "What is the intern's school?",
+            },
+          ])
+          .then((internResult) => {
+            const newIntern = new Intern(
+              internResult.name,
+              internResult.id,
+              internResult.email,
+              internResult.school
+            );
+            employeeArray.push(newIntern);
+            inquirer
+              .prompt([
+                {
+                  name: "doneCheck",
+                  type: "list",
+                  message: "Are you done adding team members?",
+                  choices: ["Yes", "No"],
+                },
+              ])
+              .then((ifDone) => {
+                if (ifDone.doneCheck === "Yes") {
+                  const employeeCards = getSite(employeeArray);
+                  fs.writeFile(`./dist/team.html`, employeeCards, (err) =>
+                    err
+                      ? console.log("Site Generation failed.")
+                      : console.log("Site Created!")
+                  );
+                } else {
+                  init();
+                }
+              });
+          });
       }
     });
 };
 
-inquirer
-  .prompt([
-    {
-      type: "input",
-      name: "name",
-      message: "What is the team manager's name?",
-    },
-    {
-      type: "input",
-      name: "id",
-      message: "What is the team manager's employee ID?",
-    },
-    {
-      type: "input",
-      name: "email",
-      message: "What is the team manager's email address?",
-    },
-    {
-      type: "input",
-      name: "officeNumber",
-      message: "What is the team manager's office number?",
-    },
-    {
-      type: "list",
-      name: "nextStep",
-      message: "What would you like to do next?",
-      choices: ["Add an engineer", "Add an intern", "Finish Building"],
-    },
-  ])
-  .then((answers) => {
-    if (answers.nextStep === "Finish Building") {
-      // Write HTML file with answers
-      return console.log(answers);
-    } else if (answers.nextStep === "Add an engineer") {
-      console.log(answers);
-      engineer();
-    } else if (answers.nextStep === "Add an intern") {
-      console.log(answers);
-      intern();
-    }
-  });
+init();
+module.exports = employeeArray;

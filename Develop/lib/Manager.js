@@ -1,19 +1,9 @@
-class Manager {
-  constructor(name, id, email, officeNumber) {
-    this.name = name;
-    this.id = id;
-    this.email = email;
-    this.officeNumber = officeNumber;
-  }
+const Employee = require("../lib/Employee");
 
-  getName() {
-    return `${this.name}`;
-  }
-  getId() {
-    return JSON.parse(`${this.id}`);
-  }
-  getEmail() {
-    return `${this.email}`;
+class Manager extends Employee {
+  constructor(name, id, email, officeNumber) {
+    super(name, id, email);
+    this.officeNumber = officeNumber;
   }
   getOfficeNumber() {
     return JSON.parse(`${this.officeNumber}`);

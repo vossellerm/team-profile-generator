@@ -1,5 +1,5 @@
-const generateTeam = (name, id, email, github, school, officeNumber) => {
-  `  <!DOCTYPE html>
+const getSite = (employeeArray) => {
+  return `  <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -18,92 +18,73 @@ const generateTeam = (name, id, email, github, school, officeNumber) => {
   <body>
     <h3 class="p-3 mb-2 bg-danger text-white text-center pt-5 pb-5">My Team</h3>
     <div class="row row-cols-1 row-cols-md-4 g-4 mx-auto">
-      <div class="col">
-        <div class="card" style="width: 18rem">
-          <div class="card-body p-3 mb-2 bg-primary text-white">
-            <h4 class="card-title">Jared</h4>
-            <h6 class="card-title">Manager</h6>
-          </div>
-          <ul class="list-group ms-4 me-4 mt-4 mb-4">
-            <li class="list-group-item">ID: 1</li>
-            <li class="list-group-item">
-              Email: <a href="mailto:test@email.com">test@email.com</a>
-            </li>
-            <li class="list-group-item">Office number: 1</li>
-          </ul>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card" style="width: 18rem">
-          <div class="card-body p-3 mb-2 bg-primary text-white">
-            <h4 class="card-title">Jared</h4>
-            <h6 class="card-title">Manager</h6>
-          </div>
-          <ul class="list-group ms-4 me-4 mt-4 mb-4">
-            <li class="list-group-item">ID: 1</li>
-            <li class="list-group-item">
-              Email: <a href="mailto:test@email.com">test@email.com</a>
-            </li>
-            <li class="list-group-item">
-              GitHub: <a href="#" target="_blank">github</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card" style="width: 18rem">
-          <div class="card-body p-3 mb-2 bg-primary text-white">
-            <h4 class="card-title">Jared</h4>
-            <h6 class="card-title">Manager</h6>
-          </div>
-          <ul class="list-group ms-4 me-4 mt-4 mb-4">
-            <li class="list-group-item">ID: 1</li>
-            <li class="list-group-item">
-              Email: <a href="mailto:test@email.com">test@email.com</a>
-            </li>
-            <li class="list-group-item">
-              GitHub: <a href="#" target="_blank">github</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card" style="width: 18rem">
-          <div class="card-body p-3 mb-2 bg-primary text-white">
-            <h4 class="card-title">Jared</h4>
-            <h6 class="card-title">Manager</h6>
-          </div>
-          <ul class="list-group ms-4 me-4 mt-4 mb-4">
-            <li class="list-group-item">ID: 1</li>
-            <li class="list-group-item">
-              Email: <a href="mailto:test@email.com">test@email.com</a>
-            </li>
-            <li class="list-group-item">
-              GitHub: <a href="#" target="_blank">github</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card" style="width: 18rem">
-          <div class="card-body p-3 mb-2 bg-primary text-white">
-            <h4 class="card-title">Jared</h4>
-            <h6 class="card-title">Manager</h6>
-          </div>
-          <ul class="list-group ms-4 me-4 mt-4 mb-4">
-            <li class="list-group-item">ID: 1</li>
-            <li class="list-group-item">
-              Email: <a href="mailto:test@email.com">test@email.com</a>
-            </li>
-            <li class="list-group-item">
-              GitHub: <a href="#" target="_blank">github</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      ${generateTeam(employeeArray)}
     </div>
   </body>
 </html>`;
 };
-
-module.exports = generateTeam;
+function generateTeam(employeeArray) {
+  function generateManager(manager) {
+    return `  <div class="col">
+    <div class="card" style="width: 18rem">
+         <div class="card-body p-3 mb-2 bg-primary text-white">
+          <h5 class="card-title">Manager-</h5>
+          <h6 class="card-title">${manager.name}</h6>
+          </div>
+          <ul class="list-group ms-4 me-4 mt-4 mb-4">
+           <li class="list-group-item">ID: ${manager.id}</li>
+            <li class="list-group-item">
+              Email: <a href="mailto:${manager.email}">${manager.email}</a>
+            </li>
+            <li class="list-group-item">Office number: ${manager.officeNumber}</li>
+          </ul>
+        </div>
+      </div>`;
+  }
+  function generateEngineer(engineer) {
+    return `  <div class="col">
+    <div class="card" style="width: 18rem">
+           <div class="card-body p-3 mb-2 bg-primary text-white">
+          <h5 class="card-title">Engineer-</h5>
+          <h6 class="card-title">${engineer.name}</h6>
+          </div>
+          <ul class="list-group ms-4 me-4 mt-4 mb-4">
+           <li class="list-group-item">ID: ${engineer.id}</li>
+            <li class="list-group-item">
+              Email: <a href="mailto:${engineer.email}">${engineer.email}</a>
+            </li>
+            <li class="list-group-item">GitHub: <a href="https://github.com/${engineer.github}">${engineer.github}</a></li>
+          </ul>
+          </div>
+        </div>`;
+  }
+  function generateIntern(intern) {
+    return `  <div class="col">
+    <div class="card" style="width: 18rem">
+           <div class="card-body p-3 mb-2 bg-primary text-white">
+            <h5 class="card-title">Intern-</h5>
+            <h6 class="card-title">${intern.name}</h6>
+           </div>
+          <ul class="list-group ms-4 me-4 mt-4 mb-4">
+           <li class="list-group-item">ID: ${intern.id}</li>
+            <li class="list-group-item">
+              Email: <a href="mailto:${intern.email}">${intern.email}</a>
+            </li>
+            <li class="list-group-item">School: ${intern.school}</li>
+          </ul>
+          </div>
+        </div>`;
+  }
+  const document = [];
+  for (let i = 0; i < employeeArray.length; i++) {
+    if (employeeArray[i].getRole() === "Manager") {
+      document.push(generateManager(employeeArray[i]));
+    } else if (employeeArray[i].getRole() === "Engineer") {
+      document.push(generateEngineer(employeeArray[i]));
+    } else {
+      document.push(generateIntern(employeeArray[i]));
+    }
+  }
+  return document.join(" ");
+}
+module.exports = getSite;
