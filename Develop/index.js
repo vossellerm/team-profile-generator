@@ -39,10 +39,12 @@ const engineer = () => {
     .then((answers) => {
       if (answers.nextStep === "Finish Building") {
         // Write HTML file with answers
-        console.log("done");
+        return console.log(answers);
       } else if (answers.nextStep === "Add an engineer") {
+        console.log(answers);
         engineer();
       } else if (answers.nextStep === "Add an intern") {
+        console.log(answers);
         intern();
       }
     });
@@ -80,10 +82,12 @@ const intern = () => {
     .then((answers) => {
       if (answers.nextStep === "Finish Building") {
         // Write HTML file with answers
-        console.log("done");
+        return console.log(answers);
       } else if (answers.nextStep === "Add an engineer") {
+        console.log(answers);
         engineer();
       } else if (answers.nextStep === "Add an intern") {
+        console.log(answers);
         intern();
       }
     });
@@ -121,10 +125,12 @@ inquirer
   .then((answers) => {
     if (answers.nextStep === "Finish Building") {
       // Write HTML file with answers
-      console.log("done");
+      return console.log(answers);
     } else if (answers.nextStep === "Add an engineer") {
+      console.log(answers);
       engineer();
     } else if (answers.nextStep === "Add an intern") {
+      console.log(answers);
       intern();
     }
   });
